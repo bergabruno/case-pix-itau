@@ -1,27 +1,26 @@
-package br.com.itau.pix.model;
+package br.com.itau.pix.dto.request;
 
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.validation.annotation.Validated;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class PixKeyRegistrationDTO {
-
-    private String id; // Gerar um codigo de registro Unico - UUID
-
-    @NotNull
-    private String keyType; // se cadastrar um CPF - colocar max 5, se cadastrar um CNPj - max 20 ?
-    // Não deve permitir o registro de chaves duplicadas. O valor informado no campo VALOR
+@Validated
+public class PixKeyRequestDTO {
 
     @NotNull
     @Size(max = 77)
     private String keyValue;
+
+    private String keyType;
 
     @NotNull
     private String accountType;
@@ -36,7 +35,6 @@ public class PixKeyRegistrationDTO {
     @Size(max = 30)
     private String accountHolderFirstName;
 
+    @Size(max = 45)
     private String accountHolderLastName;
-
-    private String timestamp;
 }

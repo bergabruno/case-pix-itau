@@ -5,9 +5,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum KeyTypesEnum {
+public enum StatusEnum {
 
-    PHONE ("Phone"), EMAIL ("Email"), CPF("Cpf"), CNPJ("Cnpj"), RANDOM("Random");
+    ACTIVE ("Active"), INACTIVE ("Inactive");
 
     private final String name;
 }

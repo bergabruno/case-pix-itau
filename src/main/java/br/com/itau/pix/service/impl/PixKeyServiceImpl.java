@@ -1,7 +1,7 @@
 package br.com.itau.pix.service.impl;
 
-import br.com.itau.pix.model.PixKeyRegistrationDTO;
-import br.com.itau.pix.service.PixService;
+import br.com.itau.pix.dto.model.PixKeyDTO;
+import br.com.itau.pix.service.PixKeyService;
 import br.com.itau.pix.validator.PixKeyValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,15 +10,15 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-public class PixServceImpl implements PixService {
+public class PixKeyServiceImpl implements PixKeyService {
 
     private PixKeyValidator pixKeyValidator;
 
     @Override
-    public UUID savePixKey(PixKeyRegistrationDTO pixKeyRegistrationDTO) {
+    public UUID savePixKey(PixKeyDTO pixKeyDTO) {
 
-        String keyType = pixKeyValidator.getKeyType(pixKeyRegistrationDTO.getKeyValue());
-        pixKeyRegistrationDTO.setKeyType(keyType);
+//        String keyType = pixKeyValidator.getKeyType(pixKeyDTO.getKeyValue());
+//        pixKeyDTO.setKeyType(keyType);
 
         UUID id = UUID.randomUUID();
 
