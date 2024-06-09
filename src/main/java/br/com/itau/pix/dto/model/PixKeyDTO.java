@@ -5,8 +5,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Document(collection = "PixKey")
 @Getter
@@ -30,4 +30,12 @@ public class PixKeyDTO {
     private String accountHolderLastName;
 
     private List<String> pixKeyValueIds;
+
+
+    public void addPixKeyValueId(String pixKeyValueId) {
+        if (this.pixKeyValueIds == null) {
+            this.pixKeyValueIds = new ArrayList<>();
+        }
+        this.pixKeyValueIds.add(pixKeyValueId);
+    }
 }

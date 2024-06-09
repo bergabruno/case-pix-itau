@@ -5,4 +5,4 @@ spring:
 
 server:
   servlet:
-    contextPath: "/maintenance_key_pix/v1"
+    contextPath: "/pix_key_management/v1"

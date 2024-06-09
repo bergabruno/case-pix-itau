@@ -1,6 +1,7 @@
 package br.com.itau.pix.service;
 
 import br.com.itau.pix.dto.model.PixKeyDTO;
+import br.com.itau.pix.dto.request.PixKeyRequestDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -8,5 +9,5 @@ import java.util.UUID;
 @Service
 public interface PixKeyService {
 
-    UUID savePixKey(PixKeyDTO pixKeyDTO);
+    PixKeyDTO savePixKey(PixKeyRequestDTO requestDTO);
 }

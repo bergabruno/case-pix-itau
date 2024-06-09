@@ -1,11 +1,10 @@
 package br.com.itau.pix.dto.model;
 
+import br.com.itau.pix.dto.request.PixKeyRequestDTO;
 import br.com.itau.pix.enumerators.StatusEnum;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.validation.constraints.Digits;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 @EqualsAndHashCode
 @ToString
 @Validated
+@NoArgsConstructor
 public class PixKeyValueDTO {
 
     @Id
@@ -30,5 +30,13 @@ public class PixKeyValueDTO {
 
     private String timestampExclusion;
 
+    private String accountHolderInclusion;
+
     private StatusEnum status;
+
+    public PixKeyValueDTO(PixKeyRequestDTO pixKeyRequestDTO) {
+        this.keyType = pixKeyRequestDTO.getKeyType();
+        this.keyValue = pixKeyRequestDTO.getKeyValue();
+        this.accountHolderInclusion = pixKeyRequestDTO.getAgencyNumber().toString() + pixKeyRequestDTO.getAccountNumber().toString();
+    }
 }

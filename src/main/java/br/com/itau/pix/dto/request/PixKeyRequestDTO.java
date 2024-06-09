@@ -26,10 +26,10 @@ public class PixKeyRequestDTO {
     private String accountType;
 
     @Digits(integer = 4, fraction = 0)
-    private int agencyNumber;
+    private Integer agencyNumber;
 
     @Digits(integer = 8, fraction = 0)
-    private int accountNumber;
+    private Integer accountNumber;
 
     @NotNull
     @Size(max = 30)

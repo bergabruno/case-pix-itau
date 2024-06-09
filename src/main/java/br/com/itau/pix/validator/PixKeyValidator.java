@@ -15,13 +15,10 @@ public class PixKeyValidator {
     private static final Pattern RANDOM_PATTERN = Pattern.compile("^[a-zA-Z0-9]{36}$");
 
 
-    public String getKeyType(String keyValue) {
+    public boolean isValidKey(String keyType ,String keyValue) {
+        //TODO alterar para retornar somente se a chave eh valida ou nao, nao preciso determinar a chave
 
-        KeyTypesEnum keyType = this.keyTypeDetermination(keyValue);
-
-        this.validateKey(keyType, keyValue);
-
-        return keyType.getName();
+        return true;
     }
 
     private void validateKey(KeyTypesEnum keyType, String keyValue) {
@@ -36,10 +33,6 @@ public class PixKeyValidator {
                 break;
             default:
                 break;
-        }
-
-        if (!isValid) {
-            throw new IllegalArgumentException("A chave " + keyType + " não é válida");
         }
     }
 
