@@ -1,9 +1,8 @@
 package br.com.itau.pix.dto.model;
 
-import br.com.itau.pix.dto.request.PixKeyRequestDTO;
+import br.com.itau.pix.dto.request.PixKeyRequestPostDTO;
 import br.com.itau.pix.enumerators.StatusEnum;
 
-import jakarta.validation.constraints.Digits;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -30,13 +29,16 @@ public class PixKeyValueDTO {
 
     private String timestampExclusion;
 
-    private String accountHolderInclusion;
+    private String agencyAccountCombinationInclusion;
+
+    private String accountCombinationInclusion;
 
     private StatusEnum status;
 
-    public PixKeyValueDTO(PixKeyRequestDTO pixKeyRequestDTO) {
-        this.keyType = pixKeyRequestDTO.getKeyType();
-        this.keyValue = pixKeyRequestDTO.getKeyValue();
-        this.accountHolderInclusion = pixKeyRequestDTO.getAgencyNumber().toString() + pixKeyRequestDTO.getAccountNumber().toString();
+    public PixKeyValueDTO(PixKeyRequestPostDTO pixKeyRequestPostDTO) {
+        this.keyType = pixKeyRequestPostDTO.getKeyType();
+        this.keyValue = pixKeyRequestPostDTO.getKeyValue();
+        this.agencyAccountCombinationInclusion = pixKeyRequestPostDTO.getAgencyNumber().toString() + pixKeyRequestPostDTO.getAccountNumber().toString();
+        this.accountCombinationInclusion = pixKeyRequestPostDTO.getAccountType().toLowerCase() + "|" + this.agencyAccountCombinationInclusion;
     }
 }

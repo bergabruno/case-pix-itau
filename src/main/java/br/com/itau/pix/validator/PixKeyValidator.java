@@ -1,6 +1,6 @@
 package br.com.itau.pix.validator;
 
-import br.com.itau.pix.enumerators.KeyTypesEnum;
+import br.com.itau.pix.exception.InvalidKeyException;
 import org.springframework.stereotype.Component;
 
 import java.util.regex.Pattern;
@@ -15,43 +15,21 @@ public class PixKeyValidator {
     private static final Pattern RANDOM_PATTERN = Pattern.compile("^[a-zA-Z0-9]{36}$");
 
 
-    public boolean isValidKey(String keyType ,String keyValue) {
-        //TODO alterar para retornar somente se a chave eh valida ou nao, nao preciso determinar a chave
+    public void validate(String keyType ,String keyValue) {
+        boolean isValid = switch (keyType.toUpperCase()) {
+            case "CELULAR" -> PHONE_PATTERN.matcher(keyValue).matches();
+            case "EMAIL" -> EMAIL_PATTERN.matcher(keyValue).matches();
+            case "CPF" -> CPF_PATTERN.matcher(keyValue).matches() && isCpfValid(keyValue);
+            case "CNPJ" -> CNPJ_PATTERN.matcher(keyValue).matches() && isCnpjValid(keyValue);
+            case "ALEATORIO" -> RANDOM_PATTERN.matcher(keyValue).matches();
+            default -> throw new InvalidKeyException("Tipo de chave desconhecido.");
+        };
 
-        return true;
-    }
-
-    private void validateKey(KeyTypesEnum keyType, String keyValue) {
-        boolean isValid = true;
-
-        switch (keyType) {
-            case CPF:
-                isValid = isCpfValid(keyValue);
-                break;
-            case CNPJ:
-                isValid = isCnpjValid(keyValue);
-                break;
-            default:
-                break;
+        if (!isValid) {
+            throw new InvalidKeyException("Valor de chave inválido para o tipo " + keyType);
         }
-    }
 
-    private KeyTypesEnum keyTypeDetermination(String keyValue) {
-        if (PHONE_PATTERN.matcher(keyValue).matches()) {
-            return KeyTypesEnum.PHONE;
-        } else if (EMAIL_PATTERN.matcher(keyValue).matches()) {
-            return KeyTypesEnum.EMAIL;
-        } else if (CPF_PATTERN.matcher(keyValue).matches()) {
-            return KeyTypesEnum.CPF;
-        } else if (CNPJ_PATTERN.matcher(keyValue).matches()) {
-            return KeyTypesEnum.CNPJ;
-        } else if (RANDOM_PATTERN.matcher(keyValue).matches()) {
-            return KeyTypesEnum.RANDOM;
-        } else {
-            throw new IllegalArgumentException("Valor de chave nao corresponde a nenhum tipo conhecido.");
-        }
     }
-
 
     private boolean isCpfValid(String cpf) {
         if (cpf == null || cpf.length() != 11) return false;

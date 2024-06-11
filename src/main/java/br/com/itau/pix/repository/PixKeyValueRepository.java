@@ -16,9 +16,11 @@ public interface PixKeyValueRepository extends MongoRepository<PixKeyValueDTO, S
 
     Optional<List<PixKeyValueDTO>> findByTimestampExclusion(String timestampExclusion);
 
+    List<PixKeyValueDTO> findByAccountCombinationInclusion(String keyType);
+
+    List<PixKeyValueDTO> findByAgencyAccountCombinationInclusion(String agencyAccountCombination);
+
     Optional<PixKeyValueDTO> findByKeyValue(String keyValue);
 
     boolean existsById(String keyId);
-
-    boolean existsByKeyValue(String keyValue);
 }
