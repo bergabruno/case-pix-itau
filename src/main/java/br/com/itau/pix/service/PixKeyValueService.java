@@ -14,7 +14,7 @@ public interface PixKeyValueService {
 
     PixKeyValueDTO findById(String id);
 
-    PixKeyValueDTO update(String id, PixKeyValueDTO pixKeyValueDTO);
+    PixKeyValueDTO updateKeyValue(String id, PixKeyValueDTO pixKeyValueDTO);
 
     PixKeyValueDTO exclusionPixKeyValue(String id);
 }
