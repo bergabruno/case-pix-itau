@@ -3,10 +3,7 @@ package br.com.itau.pix.service.impl;
 import br.com.itau.pix.dto.model.PixKeyValueDTO;
 import br.com.itau.pix.enumerators.PersonType;
 import br.com.itau.pix.enumerators.StatusEnum;
-import br.com.itau.pix.exception.AlreadyInactiveException;
-import br.com.itau.pix.exception.DuplicateKeyException;
-import br.com.itau.pix.exception.InvalidKeyException;
-import br.com.itau.pix.exception.ResourceNotFoundException;
+import br.com.itau.pix.exception.*;
 import br.com.itau.pix.repository.PixKeyValueRepository;
 import br.com.itau.pix.service.PixKeyValueService;
 import br.com.itau.pix.util.DateFormatUtil;
@@ -15,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -26,13 +22,9 @@ public class PixKeyValueServiceImpl implements PixKeyValueService {
 
     @Override
     public PixKeyValueDTO save(PixKeyValueDTO pixKeyValueDTO) {
-        validateDuplicateKey(pixKeyValueDTO);
+        List<PixKeyValueDTO> activeKeys = getPixKeysActive(pixKeyValueDTO);
 
-        // Contar chaves existentes para a conta
-        List<PixKeyValueDTO> existingKeys = pixKeyValueRepository.findByAccountCombinationInclusion(pixKeyValueDTO.getAccountCombinationInclusion());
-        List<PixKeyValueDTO> activeKeys = existingKeys.stream()
-                .filter(key -> key.getStatus() == StatusEnum.ACTIVE)
-                .toList();
+        validateDuplicateKey(pixKeyValueDTO);
 
         validateKeyCount(pixKeyValueDTO, activeKeys);
 
@@ -50,16 +42,36 @@ public class PixKeyValueServiceImpl implements PixKeyValueService {
     }
 
     @Override
-    public PixKeyValueDTO update(String id, PixKeyValueDTO pixKeyValueDTO) {
-        //TODO fazer a alteracao
-        return null;
+    public PixKeyValueDTO updateKeyValue(String id, PixKeyValueDTO pixKeyValueDTO) {
+        PixKeyValueDTO pixKeyValueFromDB = this.findById(id);
+
+        if (pixKeyValueFromDB.getStatus() == StatusEnum.INACTIVE) {
+            throw new AlreadyInactiveException("A chave se encontra desativada, nao eh possivel alterar uma chave desativada.");
+        }
+
+        if(!pixKeyValueFromDB.getAccountCombinationInclusion().equalsIgnoreCase(pixKeyValueDTO.getAccountCombinationInclusion())){
+            throw new DifferentAccountException("A conta informada nao coincide com a conta cadastrada");
+        }
+
+        if (!pixKeyValueFromDB.getKeyType().equalsIgnoreCase(pixKeyValueDTO.getKeyType())) {
+            throw new InvalidKeyTypeException("O tipo da chave informada nao coincide com o tipo de chave cadastrada.");
+        }
+
+        if(pixKeyValueFromDB.getKeyValue().equalsIgnoreCase(pixKeyValueDTO.getKeyValue())){
+            throw new DuplicateKeyException("O valor da chave informada eh o mesmo cadastrado.");
+        }
+
+        pixKeyValueFromDB.setKeyValue(pixKeyValueDTO.getKeyValue());
+        pixKeyValueFromDB.setTimestampUpdate(DateFormatUtil.formatToString(LocalDateTime.now()));
+
+        return pixKeyValueRepository.save(pixKeyValueFromDB);
     }
 
     @Override
     public PixKeyValueDTO exclusionPixKeyValue(String id) {
         PixKeyValueDTO pixKeyValueDTO = this.findById(id);
 
-        if(StatusEnum.INACTIVE == pixKeyValueDTO.getStatus()){
+        if (StatusEnum.INACTIVE == pixKeyValueDTO.getStatus()) {
             throw new AlreadyInactiveException("A chave ja se encontra desativada!");
         }
 
@@ -69,35 +81,43 @@ public class PixKeyValueServiceImpl implements PixKeyValueService {
         return pixKeyValueRepository.save(pixKeyValueDTO);
     }
 
+    private List<PixKeyValueDTO> getPixKeysActive(PixKeyValueDTO pixKeyValueDTO) {
+        List<PixKeyValueDTO> existingKeys = pixKeyValueRepository.findByAccountCombinationInclusion(pixKeyValueDTO.getAccountCombinationInclusion());
+        return existingKeys.stream()
+                .filter(key -> key.getStatus() == StatusEnum.ACTIVE)
+                .toList();
+    }
+
 
     private void validateDuplicateKey(PixKeyValueDTO pixKeyValueDTO) {
-        Optional<PixKeyValueDTO> existingKeyValue = pixKeyValueRepository.findByKeyValue(pixKeyValueDTO.getKeyValue());
+        PixKeyValueDTO existingKeyValue = pixKeyValueRepository.findByKeyValue(pixKeyValueDTO.getKeyValue()).orElse(null);
 
-        if (existingKeyValue.isPresent()) {
-            PixKeyValueDTO keyValueDTO = existingKeyValue.get();
-            if (keyValueDTO.getAccountCombinationInclusion().equalsIgnoreCase(pixKeyValueDTO.getAccountCombinationInclusion())) {
-                throw new DuplicateKeyException("A chave que você tentou cadastrar, já está cadastrada em sua conta");
+        if(existingKeyValue != null){
+            String isInactive = existingKeyValue.getStatus() == StatusEnum.INACTIVE ? "INATIVA" : "ATIVA";
+            if (existingKeyValue.getAccountCombinationInclusion().equalsIgnoreCase(pixKeyValueDTO.getAccountCombinationInclusion())) {
+                throw new DuplicateKeyException("A chave que você tentou cadastrar, já está cadastrada em sua conta. O status da chave eh: " + isInactive);
             } else {
                 throw new DuplicateKeyException("A chave que você tentou cadastrar, já está cadastrada em outra conta.");
             }
         }
+
     }
 
     private void validateKeyCount(PixKeyValueDTO pixKeyValueDTO, List<PixKeyValueDTO> activeKeys) {
         PersonType personType = getPersonType(activeKeys);
 
-        if (personType == PersonType.UNDEFINED && activeKeys.size() == 4) {
+        if (personType == PersonType.UNDEFINED && activeKeys.size() >= 4) {
             if (!pixKeyValueDTO.getKeyType().equalsIgnoreCase("CPF") && !pixKeyValueDTO.getKeyType().equalsIgnoreCase("CNPJ")) {
-                throw new InvalidKeyException("A próxima chave cadastrada deve ser um CPF ou CNPJ.");
+                throw new InvalidKeyValueException("A próxima chave cadastrada deve ser um CPF ou CNPJ.");
             }
         }
 
         if (personType == PersonType.FISICA && activeKeys.size() >= 5) {
-            throw new InvalidKeyException("Você não pode cadastrar mais de 5 chaves para pessoa física.");
+            throw new InvalidKeyValueException("Você não pode cadastrar mais de 5 chaves para pessoa física.");
         }
 
         if (personType == PersonType.JURIDICA && activeKeys.size() >= 20) {
-            throw new InvalidKeyException("Você não pode cadastrar mais de 20 chaves para pessoa jurídica.");
+            throw new InvalidKeyValueException("Você não pode cadastrar mais de 20 chaves para pessoa jurídica.");
         }
     }
 

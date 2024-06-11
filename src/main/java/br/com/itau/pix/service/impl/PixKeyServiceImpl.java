@@ -2,17 +2,22 @@ package br.com.itau.pix.service.impl;
 
 import br.com.itau.pix.dto.model.PixKeyDTO;
 import br.com.itau.pix.dto.model.PixKeyValueDTO;
+import br.com.itau.pix.dto.request.PixKeyRequestPatchDTO;
 import br.com.itau.pix.dto.request.PixKeyRequestPostDTO;
 import br.com.itau.pix.dto.response.PixKeyResponseDeleteDTO;
+import br.com.itau.pix.dto.response.PixKeyResponseGetDTO;
+import br.com.itau.pix.dto.response.PixKeyResponsePatchDTO;
 import br.com.itau.pix.exception.ResourceNotFoundException;
 import br.com.itau.pix.repository.PixKeyRepository;
 import br.com.itau.pix.service.PixKeyService;
 import br.com.itau.pix.service.PixKeyValueService;
 import br.com.itau.pix.validator.PixKeyValidator;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -29,23 +34,35 @@ public class PixKeyServiceImpl implements PixKeyService {
     @Override
     public PixKeyDTO savePixKey(PixKeyRequestPostDTO requestDTO) {
         log.info("Save pix key: {}", requestDTO);
-        // Validação da chave PIX
+
         pixKeyValidator.validate(requestDTO.getKeyType(), requestDTO.getKeyValue());
 
-        // Salvando o valor da chave PIX
         PixKeyValueDTO pixKeyValueDTO = pixKeyValueService.save(new PixKeyValueDTO(requestDTO));
 
-        // Criando o DTO da chave PIX
         PixKeyDTO pixKeyDTO = new PixKeyDTO(requestDTO, pixKeyValueDTO);
 
-        // Verificando se a chave PIX já existe no banco de dados
         pixKeyDTO = findExistingPixKey(pixKeyDTO);
 
-        // Adicionando o ID do valor da chave PIX
         pixKeyDTO.addPixKeyValueId(pixKeyValueDTO.getId());
 
-        // Salvando a chave PIX no repositório
         return pixKeyRepository.save(pixKeyDTO);
+    }
+
+    @Override
+    public PixKeyResponseGetDTO getByParam(Map<String, Object> params) {
+        log.info("Get pix key by params: {}", params);
+        return null;
+    }
+
+    @Override
+    public PixKeyResponsePatchDTO update(PixKeyRequestPatchDTO pixKeyRequestPatchDTO) {
+        pixKeyValidator.validate(pixKeyRequestPatchDTO.getKeyType(), pixKeyRequestPatchDTO.getKeyValue());
+
+        PixKeyValueDTO pixKeyValueDTO = new PixKeyValueDTO(pixKeyRequestPatchDTO);
+
+        pixKeyValueDTO = pixKeyValueService.updateKeyValue(pixKeyRequestPatchDTO.getId(),pixKeyValueDTO);
+
+        return new PixKeyResponsePatchDTO(pixKeyValueDTO, pixKeyRequestPatchDTO);
     }
 
     @Override

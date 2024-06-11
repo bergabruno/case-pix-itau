@@ -1,5 +1,6 @@
 package br.com.itau.pix.dto.model;
 
+import br.com.itau.pix.dto.request.PixKeyRequestPatchDTO;
 import br.com.itau.pix.dto.request.PixKeyRequestPostDTO;
 import br.com.itau.pix.enumerators.StatusEnum;
 
@@ -29,6 +30,8 @@ public class PixKeyValueDTO {
 
     private String timestampExclusion;
 
+    private String timestampUpdate;
+
     private String agencyAccountCombinationInclusion;
 
     private String accountCombinationInclusion;
@@ -40,5 +43,12 @@ public class PixKeyValueDTO {
         this.keyValue = pixKeyRequestPostDTO.getKeyValue();
         this.agencyAccountCombinationInclusion = pixKeyRequestPostDTO.getAgencyNumber().toString() + pixKeyRequestPostDTO.getAccountNumber().toString();
         this.accountCombinationInclusion = pixKeyRequestPostDTO.getAccountType().toLowerCase() + "|" + this.agencyAccountCombinationInclusion;
+    }
+
+    public PixKeyValueDTO(PixKeyRequestPatchDTO pixKeyRequestPatchDTO) {
+        this.keyType = pixKeyRequestPatchDTO.getKeyType();
+        this.keyValue = pixKeyRequestPatchDTO.getKeyValue();
+        this.agencyAccountCombinationInclusion = pixKeyRequestPatchDTO.getAgencyNumber().toString() + pixKeyRequestPatchDTO.getAccountNumber().toString();
+        this.accountCombinationInclusion = pixKeyRequestPatchDTO.getAccountType().toLowerCase() + "|" + this.agencyAccountCombinationInclusion;
     }
 }

@@ -1,6 +1,6 @@
 package br.com.itau.pix.validator;
 
-import br.com.itau.pix.exception.InvalidKeyException;
+import br.com.itau.pix.exception.InvalidKeyValueException;
 import org.springframework.stereotype.Component;
 
 import java.util.regex.Pattern;
@@ -22,11 +22,11 @@ public class PixKeyValidator {
             case "CPF" -> CPF_PATTERN.matcher(keyValue).matches() && isCpfValid(keyValue);
             case "CNPJ" -> CNPJ_PATTERN.matcher(keyValue).matches() && isCnpjValid(keyValue);
             case "ALEATORIO" -> RANDOM_PATTERN.matcher(keyValue).matches();
-            default -> throw new InvalidKeyException("Tipo de chave desconhecido.");
+            default -> throw new InvalidKeyValueException("Tipo de chave desconhecido.");
         };
 
         if (!isValid) {
-            throw new InvalidKeyException("Valor de chave inválido para o tipo " + keyType);
+            throw new InvalidKeyValueException("Valor de chave inválido para o tipo " + keyType);
         }
 
     }
