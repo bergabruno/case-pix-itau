@@ -11,4 +11,6 @@ public interface PixKeyRepository extends MongoRepository<PixKeyDTO, String> {
 
     Optional<PixKeyDTO> findByAccountNumberAndAgencyNumber(Integer accountNumber, Integer AgencyNumber);
 
+    Optional<PixKeyDTO> findByAccountCombination(String accountCombination);
+
 }

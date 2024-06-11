@@ -4,7 +4,6 @@ import br.com.itau.pix.dto.model.PixKeyValueDTO;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,8 +12,15 @@ public interface PixKeyValueRepository extends MongoRepository<PixKeyValueDTO, S
 
     Optional<List<PixKeyValueDTO>> findByKeyType(String keyType);
 
-    Optional<List<PixKeyValueDTO>> findByTimestampInclusion(String keyType);
+    Optional<List<PixKeyValueDTO>> findByTimestampInclusion(String timestampInclusion);
 
-    Optional<List<PixKeyValueDTO>> findByTimestampExclusion(String keyType);
+    Optional<List<PixKeyValueDTO>> findByTimestampExclusion(String timestampExclusion);
 
+    List<PixKeyValueDTO> findByAccountCombinationInclusion(String keyType);
+
+    List<PixKeyValueDTO> findByAgencyAccountCombinationInclusion(String agencyAccountCombination);
+
+    Optional<PixKeyValueDTO> findByKeyValue(String keyValue);
+
+    boolean existsById(String keyId);
 }

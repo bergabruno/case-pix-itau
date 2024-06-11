@@ -1,12 +1,15 @@
 package br.com.itau.pix.service;
 
 import br.com.itau.pix.dto.model.PixKeyDTO;
+import br.com.itau.pix.dto.request.PixKeyRequestPostDTO;
+import br.com.itau.pix.dto.response.PixKeyResponseDeleteDTO;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
 
 @Service
 public interface PixKeyService {
 
-    UUID savePixKey(PixKeyDTO pixKeyDTO);
+    PixKeyDTO savePixKey(PixKeyRequestPostDTO requestDTO);
+
+    PixKeyResponseDeleteDTO deletePixKey(String pixKeyId);
 }
