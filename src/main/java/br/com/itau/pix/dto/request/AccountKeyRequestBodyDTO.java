@@ -15,7 +15,7 @@ import org.springframework.validation.annotation.Validated;
 @EqualsAndHashCode
 @ToString
 @Validated
-public class PixKeyRequestPatchDTO {
+public class AccountKeyRequestBodyDTO {
 
     private String id;
 

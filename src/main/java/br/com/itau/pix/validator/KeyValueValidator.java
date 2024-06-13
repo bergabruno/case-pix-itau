@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.regex.Pattern;
 
 @Component
-public class PixKeyValidator {
+public class KeyValueValidator {
 
     private static final Pattern PHONE_PATTERN = Pattern.compile("^\\+[1-9][0-9]{0,2}\\d{2}\\d{9}$");
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");

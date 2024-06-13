@@ -1,16 +1,15 @@
 package br.com.itau.pix.repository;
 
 import br.com.itau.pix.dto.model.PixKeyDTO;
+import br.com.itau.pix.enumerators.AccountTypeEnum;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
-@Repository
-public interface PixKeyRepository extends MongoRepository<PixKeyDTO, String> {
+public interface PixKeyRepository extends MongoRepository<PixKeyDTO, String>, PixKeyRepositoryCustom {
 
-    Optional<PixKeyDTO> findByAccountNumberAndAgencyNumber(Integer accountNumber, Integer AgencyNumber);
+    Optional<PixKeyDTO> findByKeyValue(String keyValue);
 
-    Optional<PixKeyDTO> findByAccountCombination(String accountCombination);
-
+    List<PixKeyDTO> findAllByAccountTypeAndAgencyNumberAndAccountNumber(AccountTypeEnum accountType, Integer agencyNumber, Integer accountNumber);
 }

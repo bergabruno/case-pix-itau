@@ -28,7 +28,8 @@ public class CustomExceptionHandler {
             InactiveKeyException.class,
             InvalidKeyValueException.class,
             DuplicateKeyException.class,
-            DifferentAccountException.class})
+            DifferentAccountException.class,
+            InvalidParamsException.class})
     public final ResponseEntity<ErrorDTO> handleAlreadyInactiveException(Exception ex,  HttpServletRequest request) {
         ErrorDTO errorDTO = new ErrorDTO(HttpStatus.UNPROCESSABLE_ENTITY.value(), ex.getMessage(), LocalDateTime.now(),request.getRequestURI(), null);
         return new ResponseEntity<>(errorDTO, HttpStatus.UNPROCESSABLE_ENTITY);
