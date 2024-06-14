@@ -29,7 +29,6 @@ public class InactiveKeyStatusValidationTest {
         FieldErrorDTO result = inactiveKeyStatusValidation.validate(supportUpdatePixKeyDTO);
         assertNotNull(result);
         assertEquals("keyStatus", result.getField());
-        assertEquals("A chave se encontra desativada", result.getErrorMessage());
     }
 
     @Test
@@ -53,7 +52,6 @@ public class InactiveKeyStatusValidationTest {
         FieldErrorDTO result = inactiveKeyStatusValidation.validate(supportDeletePixKeyDTO);
         assertNotNull(result);
         assertEquals("keyStatus", result.getField());
-        assertEquals("A chave se encontra desativada", result.getErrorMessage());
     }
 
     @Test

@@ -25,7 +25,7 @@ public class PixKeyLogServiceImpl implements PixKeyLogService {
                 pixKeyLogDTO = pixKeyLogDTOOptional;
             }
 
-            log.info("Envio de log: {}", pixKeyLogDTO.getId());
+            log.info("Send log: {}", pixKeyLogDTO.getId());
             repository.save(pixKeyLogDTO);
         }catch (Exception e){
             log.info("Occours an erro to send pixKeyLog ->" + e.getMessage());

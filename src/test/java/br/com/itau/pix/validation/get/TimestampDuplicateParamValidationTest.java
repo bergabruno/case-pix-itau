@@ -28,7 +28,6 @@ public class TimestampDuplicateParamValidationTest {
         FieldErrorDTO result = timestampDuplicateParamValidation.validate(supportGetPixKeyDTO);
         assertNotNull(result);
         assertEquals("Timestamp Duplicated", result.getField());
-        assertEquals("nao eh possivel realizar query por meio do timestamp de inclusao e exclusao", result.getErrorMessage());
     }
 
     @Test

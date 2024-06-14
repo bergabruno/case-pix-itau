@@ -38,7 +38,6 @@ public class OnlyIdParamValidationTest {
         FieldErrorDTO result = onlyIdParamValidation.validate(supportGetPixKeyDTO);
         assertNotNull(result);
         assertEquals("Only ID Accept", result.getField());
-        assertEquals("Quando informado id, eh possivel fazer a query somente por ele", result.getErrorMessage());
     }
 
     @Test

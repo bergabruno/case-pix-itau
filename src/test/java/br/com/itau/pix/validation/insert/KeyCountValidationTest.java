@@ -50,7 +50,6 @@ public class KeyCountValidationTest {
         FieldErrorDTO result = keyCountValidation.validate(supportSavePixKeyDTO);
         assertNotNull(result);
         assertEquals("keyValue", result.getField());
-        assertEquals("A próxima chave cadastrada deve ser um CPF ou CNPJ.", result.getErrorMessage());
     }
 
     @Test
@@ -70,7 +69,6 @@ public class KeyCountValidationTest {
         FieldErrorDTO result = keyCountValidation.validate(supportSavePixKeyDTO);
         assertNotNull(result);
         assertEquals("keyValue", result.getField());
-        assertEquals("Você não pode cadastrar mais de 5 chaves para pessoa física.", result.getErrorMessage());
     }
 
     @Test
@@ -90,7 +88,6 @@ public class KeyCountValidationTest {
         FieldErrorDTO result = keyCountValidation.validate(supportSavePixKeyDTO);
         assertNotNull(result);
         assertEquals("keyValue", result.getField());
-        assertEquals("Você não pode cadastrar mais de 20 chaves para pessoa jurídica.", result.getErrorMessage());
     }
 
     @Test

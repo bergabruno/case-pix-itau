@@ -15,18 +15,14 @@ public class DateFormatUtil {
     }
 
     public static String formatToString(String dateTimeStr) {
-        // Parse the date time string to LocalDateTime
         try{
             LocalDateTime dateTime = LocalDateTime.parse(dateTimeStr);
 
-            // Define the desired format
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-            // Format the LocalDateTime to the desired format
 
             return dateTime.format(formatter);
         }catch (Exception e){
-            log.info("Erro ao formatar o date: " + dateTimeStr);
+            log.info("Error trying to format date: " + dateTimeStr);
         }
         return dateTimeStr;
     }

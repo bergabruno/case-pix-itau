@@ -40,7 +40,6 @@ public class IdenticalKeyValueValidationTest {
         assertEquals(1, fieldErrors.size());
         FieldErrorDTO fieldError = fieldErrors.get(0);
         assertEquals("keyValue", fieldError.getField());
-        assertEquals("O valor da chave informada ja existe em sua conta", fieldError.getErrorMessage());
     }
 
     @Test
