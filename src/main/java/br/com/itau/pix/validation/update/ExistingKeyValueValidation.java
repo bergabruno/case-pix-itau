@@ -18,7 +18,7 @@ public class ExistingKeyValueValidation implements UpdatePixKeyValidator {
 
     private FieldErrorDTO validateExistingKeyValue(PixKeyDTO pixKeyDTO) {
         if (pixKeyDTO != null) {
-            return new FieldErrorDTO("KeyValue", "Ja existe uma chave pix com esse valor de chave em outra conta");
+            return new FieldErrorDTO("KeyValue", "There is already a PIX key with this key value in another account.");
         }
         return null;
     }

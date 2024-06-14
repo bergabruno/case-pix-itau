@@ -17,7 +17,7 @@ public class OnlyIdParamValidation implements GetPixKeyValidator {
 
     private FieldErrorDTO validateOnlyId(HashMap<String, Object> params){
         if(params.containsKey("id") && params.size() > 1){
-            return new FieldErrorDTO("Only ID Accept","Quando informado id, eh possivel fazer a query somente por ele");
+            return new FieldErrorDTO("Only ID Accept","When ID is provided, the Query is made by only ID, take off other params.");
         }
 
         return null;

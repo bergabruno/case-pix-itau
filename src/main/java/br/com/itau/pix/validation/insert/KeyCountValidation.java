@@ -32,16 +32,16 @@ public class KeyCountValidation implements InsertPixKeyValidator {
 
         if (personType == PersonType.UNDEFINED && pixKeyDTOS.size() >= 4) {
             if (!pixKeyRequestBodyDTO.getKeyType().equalsIgnoreCase("CPF") && !pixKeyRequestBodyDTO.getKeyType().equalsIgnoreCase("CNPJ")) {
-                return new FieldErrorDTO("keyValue", "A próxima chave cadastrada deve ser um CPF ou CNPJ.");
+                return new FieldErrorDTO("keyValue", "The next key must be a CPF or a CNPJ.");
             }
         }
 
         if (personType == PersonType.FISICA && pixKeyDTOS.size() >= 5) {
-            return new FieldErrorDTO("keyValue", "Você não pode cadastrar mais de 5 chaves para pessoa física.");
+            return new FieldErrorDTO("keyValue", "You cannot register more than 5 keys for an individual Person.");
         }
 
         if (personType == PersonType.JURIDICA && pixKeyDTOS.size() >= 20) {
-            return new FieldErrorDTO("keyValue", "Você não pode cadastrar mais de 20 chaves para pessoa jurídica.");
+            return new FieldErrorDTO("keyValue", "You cannot register more than 20 keys for a legal entity.");
         }
 
         return null;

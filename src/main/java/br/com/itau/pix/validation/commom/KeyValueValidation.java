@@ -47,7 +47,7 @@ public class KeyValueValidation implements InsertPixKeyValidator, UpdatePixKeyVa
         };
 
         if (!isValid) {
-            return new FieldErrorDTO("keyValue", "A chave:" + keyValue + " nao e valida para o tipo: " + keyType);
+            return new FieldErrorDTO("keyValue", "The Key: " + keyValue + " Isn't valid for: " + keyType);
         }
 
         return null;

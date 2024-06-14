@@ -29,7 +29,11 @@ public class PixKeyRepositoryCustomImpl implements PixKeyRepositoryCustom {
         Query query = new Query();
 
         for (Map.Entry<String, Object> entry : criteria.entrySet()) {
-            query.addCriteria(Criteria.where(entry.getKey()).is(entry.getValue()));
+            if(criteria.containsKey("timestampInclusion") || criteria.containsKey("timestampExclusion")) {
+                query.addCriteria(Criteria.where(entry.getKey()).regex(".*" + entry.getValue() + ".*"));
+            }else{
+                query.addCriteria(Criteria.where(entry.getKey()).is(entry.getValue()));
+            }
         }
 
         long total = mongoTemplate.count(query, PixKeyDTO.class);
@@ -38,7 +42,7 @@ public class PixKeyRepositoryCustomImpl implements PixKeyRepositoryCustom {
         List<PixKeyDTO> pixKeyDTOS = mongoTemplate.find(query, PixKeyDTO.class);
 
         if (pixKeyDTOS.isEmpty()) {
-            throw new ResourceNotFoundException("Id Invalido", new FieldErrorDTO("Query", "Nao foi encontrado nenhuma Chave Pix com a Query informada"));
+            throw new ResourceNotFoundException("Id Invalido", new FieldErrorDTO("Query", "No PIX Key was found with the provided query."));
         }
 
         return new PageImpl<>(pixKeyDTOS, pageable, total);

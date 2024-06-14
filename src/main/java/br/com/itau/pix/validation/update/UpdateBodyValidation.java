@@ -31,22 +31,22 @@ public class UpdateBodyValidation implements UpdatePixKeyValidator {
         List<FieldErrorDTO> errors = new ArrayList<>();
 
         if (!pixKeyRequestBodyDTO.getKeyType().equalsIgnoreCase(pixKeyDTO.getKeyType())) {
-            errors.add(new FieldErrorDTO("keyType", "O tipo da chave informada nao coincide com o tipo de chave cadastrada."));
+            errors.add(new FieldErrorDTO("keyType", "The provided key type does not match the registered key type."));
         }
         if (!pixKeyRequestBodyDTO.getAccountType().toUpperCase().equalsIgnoreCase(pixKeyDTO.getAccountType().getName())) {
-            errors.add(new FieldErrorDTO("accountType", "O tipo da conta informado nao coincide com o tipo de conta cadastrada."));
+            errors.add(new FieldErrorDTO("accountType", "The provided account type does not match the registered account type."));
         }
         if (!(Objects.equals(pixKeyRequestBodyDTO.getAgencyNumber(), pixKeyDTO.getAgencyNumber()))) {
-            errors.add(new FieldErrorDTO("agencyNumber", "O numero da agência informado nao coincide com o numero da agência cadastrada."));
+            errors.add(new FieldErrorDTO("agencyNumber", "The provided agency number does not match the registered agency number."));
         }
         if (!(Objects.equals(pixKeyRequestBodyDTO.getAccountNumber(), pixKeyDTO.getAccountNumber()))) {
-            errors.add(new FieldErrorDTO("accountNumber", "O numero da conta informado nao coincide com o numero da conta cadastrada."));
+            errors.add(new FieldErrorDTO("accountNumber", "The provided account number does not match the registered account number."));
         }
         if (!pixKeyRequestBodyDTO.getAccountHolderFirstName().equalsIgnoreCase(pixKeyDTO.getAccountHolderFirstName())) {
-            errors.add(new FieldErrorDTO("accountHolderFirstName", "O primeiro nome do titular da conta informado nao coincide com o primeiro nome do titular da conta cadastrada."));
+            errors.add(new FieldErrorDTO("accountHolderFirstName", "The provided account holder's first name does not match the registered account holder's first name."));
         }
         if (!pixKeyRequestBodyDTO.getAccountHolderLastName().equalsIgnoreCase(pixKeyDTO.getAccountHolderLastName())) {
-            errors.add(new FieldErrorDTO("accountHolderLastName", "O sobrenome do titular da conta informado nao coincide com o sobrenome do titular da conta cadastrada."));
+            errors.add(new FieldErrorDTO("accountHolderLastName", "The provided account holder's last name does not match the registered account holder's last name."));
         }
 
         if(!errors.isEmpty()){

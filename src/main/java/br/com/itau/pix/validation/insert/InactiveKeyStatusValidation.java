@@ -29,7 +29,7 @@ public class InactiveKeyStatusValidation implements UpdatePixKeyValidator, Delet
 
     private FieldErrorDTO inactiveKeyStatus(PixKeyDTO pixKeyDTO) {
         if (pixKeyDTO.getStatus() == StatusEnum.INACTIVE) {
-            return new FieldErrorDTO("keyStatus","A chave se encontra desativada");
+            return new FieldErrorDTO("keyStatus","The key is inactive");
         }
 
         return null;
