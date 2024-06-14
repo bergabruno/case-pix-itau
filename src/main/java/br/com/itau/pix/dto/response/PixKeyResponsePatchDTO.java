@@ -1,10 +1,12 @@
 package br.com.itau.pix.dto.response;
 
-import br.com.itau.pix.dto.model.PixKeyValueDTO;
-import br.com.itau.pix.dto.request.PixKeyRequestPatchDTO;
+import br.com.itau.pix.dto.model.PixKeyDTO;
+import br.com.itau.pix.enumerators.AccountTypeEnum;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class PixKeyResponsePatchDTO {
 
     private String id;
@@ -13,7 +15,7 @@ public class PixKeyResponsePatchDTO {
 
     private String keyValue;
 
-    private String accountType;
+    private AccountTypeEnum accountType;
 
     private Integer agencyNumber;
 
@@ -25,15 +27,15 @@ public class PixKeyResponsePatchDTO {
 
     private String timestampInclusion;
 
-    public PixKeyResponsePatchDTO(PixKeyValueDTO pixKeyValueDTO, PixKeyRequestPatchDTO pixKeyRequestPatchDTO){
-        this.id = pixKeyValueDTO.getId();;
-        this.keyType = pixKeyValueDTO.getKeyType();
-        this.keyValue = pixKeyValueDTO.getKeyType();
-        this.accountType = pixKeyRequestPatchDTO.getAccountType();
-        this.agencyNumber = pixKeyRequestPatchDTO.getAgencyNumber();
-        this.accountNumber = pixKeyRequestPatchDTO.getAccountNumber();
-        this.accountHolderFirstName = pixKeyRequestPatchDTO.getAccountHolderFirstName();
-        this.accountHolderLastName = pixKeyRequestPatchDTO.getAccountHolderLastName();
-        this.timestampInclusion = pixKeyValueDTO.getTimestampUpdate();
+    public PixKeyResponsePatchDTO(PixKeyDTO pixKeyDTO){
+        this.id = pixKeyDTO.getId();
+        this.keyType = pixKeyDTO.getKeyType();
+        this.keyValue = pixKeyDTO.getKeyValue();
+        this.accountType = pixKeyDTO.getAccountType();
+        this.agencyNumber = pixKeyDTO.getAgencyNumber();
+        this.accountNumber = pixKeyDTO.getAccountNumber();
+        this.accountHolderFirstName = pixKeyDTO.getAccountHolderFirstName();
+        this.accountHolderLastName = pixKeyDTO.getAccountHolderLastName();
+        this.timestampInclusion = pixKeyDTO.getTimestampInclusion();
     }
 }

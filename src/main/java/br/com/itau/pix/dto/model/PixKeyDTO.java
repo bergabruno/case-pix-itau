@@ -1,13 +1,15 @@
 package br.com.itau.pix.dto.model;
 
-import br.com.itau.pix.dto.request.PixKeyRequestPostDTO;
+import br.com.itau.pix.dto.request.PixKeyRequestBodyDTO;
+import br.com.itau.pix.enumerators.AccountTypeEnum;
+import br.com.itau.pix.enumerators.StatusEnum;
+import br.com.itau.pix.util.DateFormatUtil;
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.validation.annotation.Validated;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Document(collection = "PixKey")
@@ -16,13 +18,12 @@ import java.util.UUID;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-@Validated
 public class PixKeyDTO {
 
     @Id
     private String id;
 
-    private String accountType;
+    private AccountTypeEnum accountType;
 
     private Integer agencyNumber;
 
@@ -32,31 +33,30 @@ public class PixKeyDTO {
 
     private String accountHolderLastName;
 
-    private String accountCombination;
+    @Indexed
+    private String keyType;
 
-    private List<String> pixKeyValueIds;
+    @Indexed(unique = true)
+    private String keyValue;
 
-    public PixKeyDTO(PixKeyRequestPostDTO pixKeyRequestPostDTO, PixKeyValueDTO pixKeyValueDTO){
+    private String timestampInclusion;
+
+    private String timestampExclusion;
+
+    private StatusEnum status;
+
+    public PixKeyDTO(PixKeyRequestBodyDTO requestPostDTO){
         this.id = UUID.randomUUID().toString();
-        this.accountType = pixKeyRequestPostDTO.getAccountType();
-        this.agencyNumber = pixKeyRequestPostDTO.getAgencyNumber();
-        this.accountNumber = pixKeyRequestPostDTO.getAccountNumber();
-        this.accountHolderFirstName = pixKeyRequestPostDTO.getAccountHolderFirstName();
-        this.accountHolderLastName = pixKeyRequestPostDTO.getAccountHolderLastName();
-        this.accountCombination = pixKeyValueDTO.getAccountCombinationInclusion();
+        this.accountType = AccountTypeEnum.getAccountType(requestPostDTO.getAccountType());
+        this.agencyNumber = requestPostDTO.getAgencyNumber();
+        this.accountNumber = requestPostDTO.getAccountNumber();
+        this.accountHolderFirstName = requestPostDTO.getAccountHolderFirstName();
+        this.accountHolderLastName = requestPostDTO.getAccountHolderLastName();
+        this.keyType = requestPostDTO.getKeyType();
+        this.keyValue = requestPostDTO.getKeyValue();
+        this.timestampInclusion = DateFormatUtil.formatToString(LocalDateTime.now());
+        this.status = StatusEnum.ACTIVE;
     }
 
-    public void addPixKeyValueId(String pixKeyValueId) {
-        if (this.pixKeyValueIds == null) {
-            this.pixKeyValueIds = new ArrayList<>();
-        }
-        this.pixKeyValueIds.add(pixKeyValueId);
-    }
 
-    public String getLastPixKeyValueId() {
-        if (pixKeyValueIds == null || pixKeyValueIds.isEmpty()) {
-            return null;
-        }
-        return pixKeyValueIds.get(pixKeyValueIds.size() - 1);
-    }
 }
