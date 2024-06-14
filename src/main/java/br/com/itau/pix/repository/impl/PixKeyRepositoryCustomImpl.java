@@ -1,6 +1,8 @@
 package br.com.itau.pix.repository.impl;
 
+import br.com.itau.pix.dto.error.FieldErrorDTO;
 import br.com.itau.pix.dto.model.PixKeyDTO;
+import br.com.itau.pix.exception.ResourceNotFoundException;
 import br.com.itau.pix.repository.PixKeyRepositoryCustom;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -34,6 +36,11 @@ public class PixKeyRepositoryCustomImpl implements PixKeyRepositoryCustom {
         query.with(pageable);
 
         List<PixKeyDTO> pixKeyDTOS = mongoTemplate.find(query, PixKeyDTO.class);
+
+        if (pixKeyDTOS.isEmpty()) {
+            throw new ResourceNotFoundException("Id Invalido", new FieldErrorDTO("Query", "Nao foi encontrado nenhuma Chave Pix com a Query informada"));
+        }
+
         return new PageImpl<>(pixKeyDTOS, pageable, total);
     }
 }

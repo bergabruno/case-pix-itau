@@ -3,8 +3,10 @@ package br.com.itau.pix.dto.response;
 import br.com.itau.pix.dto.model.PixKeyDTO;
 import br.com.itau.pix.enumerators.AccountTypeEnum;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class PixKeyResponsePatchDTO {
 
     private String id;

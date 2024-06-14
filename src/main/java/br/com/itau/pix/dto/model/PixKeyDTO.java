@@ -1,6 +1,6 @@
 package br.com.itau.pix.dto.model;
 
-import br.com.itau.pix.dto.request.AccountKeyRequestBodyDTO;
+import br.com.itau.pix.dto.request.PixKeyRequestBodyDTO;
 import br.com.itau.pix.enumerators.AccountTypeEnum;
 import br.com.itau.pix.enumerators.StatusEnum;
 import br.com.itau.pix.util.DateFormatUtil;
@@ -45,7 +45,7 @@ public class PixKeyDTO {
 
     private StatusEnum status;
 
-    public PixKeyDTO(AccountKeyRequestBodyDTO requestPostDTO){
+    public PixKeyDTO(PixKeyRequestBodyDTO requestPostDTO){
         this.id = UUID.randomUUID().toString();
         this.accountType = AccountTypeEnum.getAccountType(requestPostDTO.getAccountType());
         this.agencyNumber = requestPostDTO.getAgencyNumber();

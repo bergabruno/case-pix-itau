@@ -1,6 +1,6 @@
 package br.com.itau.pix.controller;
 
-import br.com.itau.pix.dto.request.AccountKeyRequestBodyDTO;
+import br.com.itau.pix.dto.request.PixKeyRequestBodyDTO;
 import br.com.itau.pix.dto.response.PixKeyResponseDeleteDTO;
 import br.com.itau.pix.dto.response.PixKeyResponseGetDTO;
 import br.com.itau.pix.dto.response.PixKeyResponsePatchDTO;
@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -23,13 +24,13 @@ public class PixKeyController {
     private PixKeyService pixKeyService;
 
     @PostMapping
-    public ResponseEntity<PixKeyResponsePostDTO> save(@RequestBody @Validated AccountKeyRequestBodyDTO accountKeyRequestBodyDTO) {
-        return new ResponseEntity<>(pixKeyService.savePixKey(accountKeyRequestBodyDTO), HttpStatus.OK);
+    public ResponseEntity<PixKeyResponsePostDTO> save(@RequestBody @Validated PixKeyRequestBodyDTO pixKeyRequestBodyDTO) {
+        return new ResponseEntity<>(pixKeyService.savePixKey(pixKeyRequestBodyDTO), HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<Page<PixKeyResponseGetDTO>> getByParam(
-            @RequestParam Map<String, Object> headers,
+            @RequestParam HashMap<String, Object> headers,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) {
 
@@ -39,9 +40,9 @@ public class PixKeyController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<PixKeyResponsePatchDTO> update(@PathVariable String id, @RequestBody @Validated AccountKeyRequestBodyDTO accountKeyRequestBodyDTO) {
-        accountKeyRequestBodyDTO.setId(id);
-        PixKeyResponsePatchDTO pixKeyResponsePatchDTO = pixKeyService.update(accountKeyRequestBodyDTO);
+    public ResponseEntity<PixKeyResponsePatchDTO> update(@PathVariable String id, @RequestBody @Validated PixKeyRequestBodyDTO pixKeyRequestBodyDTO) {
+        pixKeyRequestBodyDTO.setId(id);
+        PixKeyResponsePatchDTO pixKeyResponsePatchDTO = pixKeyService.update(pixKeyRequestBodyDTO);
 
         return new ResponseEntity<>(pixKeyResponsePatchDTO, HttpStatus.OK);
     }

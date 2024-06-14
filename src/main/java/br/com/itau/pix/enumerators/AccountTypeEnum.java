@@ -1,6 +1,6 @@
 package br.com.itau.pix.enumerators;
 
-import br.com.itau.pix.exception.InvalidParamsException;
+import br.com.itau.pix.exception.InvalidAccountTypeException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -16,7 +16,7 @@ public enum AccountTypeEnum  {
         return switch (accountType.toUpperCase()) {
             case "POUPANCA" -> AccountTypeEnum.POUPANCA;
             case "CORRENTE" -> AccountTypeEnum.CORRENTE;
-            default -> throw new InvalidParamsException("O tipo de conta esta invalido");
+            default -> throw new InvalidAccountTypeException("O tipo de conta esta invalido");
         };
     }
 }

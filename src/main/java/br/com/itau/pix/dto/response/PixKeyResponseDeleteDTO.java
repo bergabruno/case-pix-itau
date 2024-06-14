@@ -2,9 +2,12 @@ package br.com.itau.pix.dto.response;
 
 import br.com.itau.pix.dto.model.PixKeyDTO;
 import br.com.itau.pix.enumerators.AccountTypeEnum;
+import br.com.itau.pix.util.DateFormatUtil;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class PixKeyResponseDeleteDTO {
 
     private String id;
@@ -36,8 +39,8 @@ public class PixKeyResponseDeleteDTO {
         this.accountNumber = pixKeyDTO.getAccountNumber();
         this.accountHolderFirstName = pixKeyDTO.getAccountHolderFirstName();
         this.accountHolderLastName = pixKeyDTO.getAccountHolderLastName();
-        this.timestampInclusion = pixKeyDTO.getTimestampInclusion();
-        this.timestampExclusion = pixKeyDTO.getTimestampExclusion();
+        this.timestampInclusion = DateFormatUtil.formatToString(pixKeyDTO.getTimestampInclusion());
+        this.timestampExclusion = DateFormatUtil.formatToString(pixKeyDTO.getTimestampExclusion());
     }
 
 }
