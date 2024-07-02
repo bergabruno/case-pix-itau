@@ -1,0 +1,8 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@cluster0.cukr2.mongodb.net/KeyPixDatabase
+
+server:
+  servlet:
+    contextPath: "/pix_key_management/v1"
