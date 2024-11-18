@@ -18,7 +18,7 @@ public class TimestampDuplicateParamValidation implements GetPixKeyValidator {
 
     private FieldErrorDTO validateTimestampDuplicate(HashMap<String, Object> params){
         if(params.containsKey("timestampInclusion") && params.containsKey("timestampExclusion")){
-            return new FieldErrorDTO("Timestamp Duplicated","nao eh possivel realizar query por meio do timestamp de inclusao e exclusao");
+            return new FieldErrorDTO("Timestamp Duplicated","That's not allowed to make a Query with timestampInclusion and timestampExclusion, choose only one.");
         }
 
         return null;

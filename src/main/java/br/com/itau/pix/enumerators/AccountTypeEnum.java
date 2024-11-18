@@ -16,7 +16,7 @@ public enum AccountTypeEnum  {
         return switch (accountType.toUpperCase()) {
             case "POUPANCA" -> AccountTypeEnum.POUPANCA;
             case "CORRENTE" -> AccountTypeEnum.CORRENTE;
-            default -> throw new InvalidAccountTypeException("O tipo de conta esta invalido");
+            default -> throw new InvalidAccountTypeException("The account type is invalid.");
         };
     }
 }

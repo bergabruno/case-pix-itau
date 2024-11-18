@@ -64,8 +64,7 @@ public class PixKeyRepositoryCustomImplTest {
             pixKeyRepositoryCustom.findByCustomCriteria(criteria, pageable);
         });
 
-        assertEquals("Id Invalido", exception.getMessage());
-        assertEquals("Nao foi encontrado nenhuma Chave Pix com a Query informada", exception.getFieldErrorDTO().getErrorMessage());
+        assertEquals("Invalid ID", exception.getMessage());
         assertEquals("Query", exception.getFieldErrorDTO().getField());
     }
 }

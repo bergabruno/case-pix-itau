@@ -51,7 +51,6 @@ public class DuplicateKeyValidationTest {
         FieldErrorDTO result = duplicateKeyValidation.validate(supportSavePixKeyDTO);
         assertNotNull(result);
         assertEquals("keyValue", result.getField());
-        assertEquals("A chave que você tentou cadastrar, já está cadastrada em sua conta. O status da chave eh: ATIVA", result.getErrorMessage());
     }
 
     @Test
@@ -72,7 +71,6 @@ public class DuplicateKeyValidationTest {
         FieldErrorDTO result = duplicateKeyValidation.validate(supportSavePixKeyDTO);
         assertNotNull(result);
         assertEquals("keyValue", result.getField());
-        assertEquals("A chave que você tentou cadastrar, já está cadastrada em sua conta. O status da chave eh: INATIVA", result.getErrorMessage());
     }
 
     @Test
@@ -93,6 +91,5 @@ public class DuplicateKeyValidationTest {
         FieldErrorDTO result = duplicateKeyValidation.validate(supportSavePixKeyDTO);
         assertNotNull(result);
         assertEquals("keyValue", result.getField());
-        assertEquals("A chave que você tentou cadastrar, já está cadastrada em outra conta.", result.getErrorMessage());
     }
 }

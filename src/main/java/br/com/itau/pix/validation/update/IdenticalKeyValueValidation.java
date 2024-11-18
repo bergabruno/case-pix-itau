@@ -29,7 +29,7 @@ public class IdenticalKeyValueValidation implements UpdatePixKeyValidator {
         boolean identicalMatch = pixKeyDTOS.stream().anyMatch(key -> key.getKeyValue().equalsIgnoreCase(pixKeyRequestBodyDTO.getKeyValue()));
 
         if (identicalMatch) {
-            FieldErrorDTO fieldErrorDTO = new FieldErrorDTO("keyValue", "O valor da chave informada ja existe em sua conta");
+            FieldErrorDTO fieldErrorDTO = new FieldErrorDTO("keyValue", "The key value provided already exists in your account.");
             throw new ValidationException("Validation Error", List.of(fieldErrorDTO));
         }
 

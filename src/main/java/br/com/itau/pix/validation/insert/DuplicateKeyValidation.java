@@ -33,9 +33,9 @@ public class DuplicateKeyValidation implements InsertPixKeyValidator {
         String accountCombinationRequest = pixKeyRequestBodyDTO.getAccountType() + "|" + pixKeyRequestBodyDTO.getAgencyNumber().toString() + pixKeyRequestBodyDTO.getAccountNumber().toString();
 
         if (accountCombination.equalsIgnoreCase(accountCombinationRequest)) {
-            return new FieldErrorDTO("keyValue", "A chave que você tentou cadastrar, já está cadastrada em sua conta. O status da chave eh: " + isInactive);
+            return new FieldErrorDTO("keyValue", "The key you tried to register is already registered to your account. The status of the key is: " + isInactive);
         } else {
-            return new FieldErrorDTO("keyValue", "A chave que você tentou cadastrar, já está cadastrada em outra conta.");
+            return new FieldErrorDTO("keyValue", "The key you tried to register is already registered in other account.");
         }
     }
 }

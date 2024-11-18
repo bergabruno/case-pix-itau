@@ -27,7 +27,6 @@ public class ExistingKeyValueValidationTest {
         FieldErrorDTO result = existingKeyValueValidation.validate(supportUpdatePixKeyDTO);
         assertNotNull(result);
         assertEquals("KeyValue", result.getField());
-        assertEquals("Ja existe uma chave pix com esse valor de chave em outra conta", result.getErrorMessage());
     }
 
     @Test

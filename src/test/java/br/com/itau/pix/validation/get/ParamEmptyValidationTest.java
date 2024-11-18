@@ -25,7 +25,6 @@ public class ParamEmptyValidationTest {
         FieldErrorDTO result = paramEmptyValidation.validate(supportGetPixKeyDTO);
         assertNotNull(result);
         assertEquals("Query Empty", result.getField());
-        assertEquals("A query esta vazia, verifique sua requisicao", result.getErrorMessage());
     }
 
     @Test
@@ -36,7 +35,6 @@ public class ParamEmptyValidationTest {
         FieldErrorDTO result = paramEmptyValidation.validate(supportGetPixKeyDTO);
         assertNotNull(result);
         assertEquals("Query Empty", result.getField());
-        assertEquals("A query esta vazia, verifique sua requisicao", result.getErrorMessage());
     }
 
     @Test

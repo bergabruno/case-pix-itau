@@ -17,7 +17,7 @@ public class ParamEmptyValidation implements GetPixKeyValidator {
 
     private FieldErrorDTO validateParamEmpty(HashMap<String, Object> params) {
         if (params == null || params.isEmpty()) {
-            return new FieldErrorDTO("Query Empty", "A query esta vazia, verifique sua requisicao");
+            return new FieldErrorDTO("Query Empty", "The Query is Empty.");
         }
 
         return null;

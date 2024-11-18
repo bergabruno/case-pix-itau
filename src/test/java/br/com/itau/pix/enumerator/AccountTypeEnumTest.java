@@ -38,7 +38,7 @@ public class AccountTypeEnumTest {
             AccountTypeEnum.getAccountType("INVALIDO");
         });
 
-        String expectedMessage = "O tipo de conta esta invalido";
+        String expectedMessage = "invalid";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));

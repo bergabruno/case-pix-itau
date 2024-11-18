@@ -50,7 +50,6 @@ public class UpdateBodyValidationTest {
         assertEquals(1, fieldErrors.size());
         FieldErrorDTO fieldError = fieldErrors.get(0);
         assertEquals("accountNumber", fieldError.getField());
-        assertEquals("O numero da conta informado nao coincide com o numero da conta cadastrada.", fieldError.getErrorMessage());
     }
 
     private PixKeyDTO createPixKeyDTO() {

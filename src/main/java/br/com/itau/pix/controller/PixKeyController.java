@@ -14,18 +14,20 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.Map;
 
 @RestController
-@RequestMapping("/account-keys")
+@RequestMapping("/pix-keys")
 @AllArgsConstructor
 public class PixKeyController {
 
     private PixKeyService pixKeyService;
 
+
     @PostMapping
     public ResponseEntity<PixKeyResponsePostDTO> save(@RequestBody @Validated PixKeyRequestBodyDTO pixKeyRequestBodyDTO) {
-        return new ResponseEntity<>(pixKeyService.savePixKey(pixKeyRequestBodyDTO), HttpStatus.OK);
+        PixKeyResponsePostDTO response = pixKeyService.savePixKey(pixKeyRequestBodyDTO);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping
@@ -34,21 +36,23 @@ public class PixKeyController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) {
 
-        Page<PixKeyResponseGetDTO> pixKeyServiceByParams = pixKeyService.getByParams(headers, page, size);
+        Page<PixKeyResponseGetDTO> response = pixKeyService.getByParams(headers, page, size);
 
-        return new ResponseEntity<>(pixKeyServiceByParams, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<PixKeyResponsePatchDTO> update(@PathVariable String id, @RequestBody @Validated PixKeyRequestBodyDTO pixKeyRequestBodyDTO) {
         pixKeyRequestBodyDTO.setId(id);
-        PixKeyResponsePatchDTO pixKeyResponsePatchDTO = pixKeyService.update(pixKeyRequestBodyDTO);
+        PixKeyResponsePatchDTO response = pixKeyService.update(pixKeyRequestBodyDTO);
 
-        return new ResponseEntity<>(pixKeyResponsePatchDTO, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<PixKeyResponseDeleteDTO> delete(@PathVariable String id) {
-        return new ResponseEntity<>(pixKeyService.deletePixKey(id), HttpStatus.OK);
+        PixKeyResponseDeleteDTO response = pixKeyService.deletePixKey(id);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
